@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module configVersion="1.2">
+
+	<id>${project.parent.artifactId}</id>
+	<name>${project.parent.name}</name>
+	<version>${project.parent.version}</version>
+	<package>${project.parent.groupId}.${project.parent.artifactId}</package>
+	<author>${project.parent.organization.name}</author>
+	<description>${project.parent.description}</description>
+
+	<activator>org.openmrs.module.dbevent.DbEventModuleActivator</activator>
+
+	<require_version>${openmrsVersion}</require_version>
+
+</module>
