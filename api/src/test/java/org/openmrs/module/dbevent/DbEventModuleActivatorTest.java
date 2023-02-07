@@ -13,7 +13,7 @@ public class DbEventModuleActivatorTest extends BaseDbEventTest {
 
 	@BeforeEach
 	@Override
-	public void setup() {
+	public void setup() throws Exception {
 		super.setup();
 		addMemoryAppenderToLogger(logger, Level.INFO);
 	}

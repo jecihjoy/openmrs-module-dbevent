@@ -12,7 +12,7 @@ public class OperationTest extends BaseDbEventTest {
 
 	@BeforeEach
 	@Override
-	public void setup() {
+	public void setup() throws Exception {
 		super.setup();
 	}
 
