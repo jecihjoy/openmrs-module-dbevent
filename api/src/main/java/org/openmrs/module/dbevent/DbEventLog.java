@@ -9,8 +9,8 @@
  */
 package org.openmrs.module.dbevent;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanInfo;
@@ -26,7 +26,7 @@ import java.util.Map;
 public class DbEventLog {
 
 	private static final MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
-	private static final Logger log = LogManager.getLogger(DbEventLog.class);
+	private static final Log log = LogFactory.getLog(DbEventLog.class);
 	private static final Map<String, DbEventStatus> latestEvents = new HashMap<>();
 	private static final Map<String, Map<String, Integer>> tableCounts = new HashMap<>();
 

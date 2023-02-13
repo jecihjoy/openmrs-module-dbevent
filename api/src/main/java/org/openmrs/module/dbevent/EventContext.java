@@ -1,10 +1,9 @@
 package org.openmrs.module.dbevent;
 
 import lombok.Data;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
-import org.openmrs.util.OpenmrsUtil;
 
 import java.io.File;
 import java.util.Properties;
@@ -15,13 +14,13 @@ import java.util.Properties;
 @Data
 public class EventContext {
 
-    private static final Logger log = LogManager.getLogger(EventContext.class);
+    private static final Log log = LogFactory.getLog(EventContext.class);
 
     private File applicationDataDir;
     private Properties runtimeProperties;
 
     public EventContext() {
-        applicationDataDir = OpenmrsUtil.getApplicationDataDirectoryAsFile();
+        applicationDataDir = null; //OpenmrsUtil.getApplicationDataDirectoryAsFile();
         runtimeProperties = Context.getRuntimeProperties();
     }
 
@@ -36,6 +35,7 @@ public class EventContext {
      * @return the directory for module-related data
      */
     public File getModuleDataDir() {
-        return new File(applicationDataDir, "dbevent");
+        File file = new File("/var/lib/OpenMRS");
+        return new File(file, "dbevent");
     }
 }

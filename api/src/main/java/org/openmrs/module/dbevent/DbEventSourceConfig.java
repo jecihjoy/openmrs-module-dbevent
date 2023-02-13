@@ -2,8 +2,8 @@ package org.openmrs.module.dbevent;
 
 import lombok.Data;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Data
 public class DbEventSourceConfig {
 
-    private static final Logger log = LogManager.getLogger(DbEventSourceConfig.class);
+    private static final Log log = LogFactory.getLog(DbEventSourceConfig.class);
 
     private final Integer sourceId;
     private final String sourceName;
@@ -39,23 +39,24 @@ public class DbEventSourceConfig {
         setProperty("name", sourceName);
         setProperty("connector.class", "io.debezium.connector.mysql.MySqlConnector");
         setProperty("offset.storage", "org.apache.kafka.connect.storage.FileOffsetBackingStore");
-        setProperty("offset.storage.file.filename", offsetsDataFile.getAbsolutePath());
+        setProperty("offset.storage.file.filename", "/tmp/1_offsets.dat");
         setProperty("offset.flush.interval.ms", "0");
         setProperty("offset.flush.timeout.ms", "5000");
         setProperty("include.schema.changes", "false");
         setProperty("database.server.id", Integer.toString(sourceId));
         setProperty("database.server.name", sourceName);
         setProperty("database.history", "io.debezium.relational.history.FileDatabaseHistory");
-        setProperty("database.history.file.filename", schemaHistoryDataFile.getAbsolutePath());
+        setProperty("database.history.file.filename", "/tmp/1_schema_history.dat");
         setProperty("decimal.handling.mode", "double");
         setProperty("tombstones.on.delete", "false");
-        setProperty("snapshot.mode", "when_needed");
+        setProperty("snapshot.mode", "schema_only");
         setProperty("database.user", context.getDatabase().getUsername());
         setProperty("database.password", context.getDatabase().getPassword());
         setProperty("database.hostname", context.getDatabase().getHostname());
         setProperty("database.port", context.getDatabase().getPort());
         setProperty("database.dbname", context.getDatabase().getDatabaseName());
         setProperty("database.include.list", context.getDatabase().getDatabaseName());
+        setProperty("table.include.list", "openmrs.person,openmrs.encounter,openmrs.encounter_type");
     }
 
     /**

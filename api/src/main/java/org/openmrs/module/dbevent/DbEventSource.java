@@ -4,9 +4,9 @@ import io.debezium.embedded.Connect;
 import io.debezium.engine.ChangeEvent;
 import io.debezium.engine.DebeziumEngine;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.kafka.connect.source.SourceRecord;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class DbEventSource {
 
-    private static final Logger log = LogManager.getLogger(DbEventSource.class);
+    private static final Log log = LogFactory.getLog(DbEventSource.class);
 
     private final DbEventSourceConfig config;
     private DebeziumConsumer debeziumConsumer;

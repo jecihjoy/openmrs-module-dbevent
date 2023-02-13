@@ -9,24 +9,45 @@
  */
 package org.openmrs.module.dbevent;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.BaseModuleActivator;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 /**
  * This class contains the logic that is run every time this module is either started or shutdown
  */
-public class DbEventModuleActivator extends BaseModuleActivator {
+@Component
+public class DbEventModuleActivator extends BaseModuleActivator implements ApplicationContextAware{
 
-	private static final Logger log = LogManager.getLogger(DbEventModuleActivator.class);
-	
+	Log log = LogFactory.getLog(DbEventModuleActivator.class);
+
+	private static ApplicationContext applicationContext;
+	@Autowired
+	private EventConsumer patientEventConsumer;
+
 	@Override
 	public void started() {
-		log.info("DB Event Module Started");
+		log.error("DB Event Module Started");
+		applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
+		EventContext ctx = new EventContext();
+		DbEventSourceConfig cfg = new DbEventSourceConfig(1, "TestDBZ", ctx);
+		DbEventSource source = new DbEventSource(cfg);
+		source.setEventConsumer(patientEventConsumer);
+		source.start();
 	}
-	
+
 	@Override
 	public void stopped() {
-		log.info("DB Event Module Stopped");
+		log.error("DB Event Module Stopped");
+	}
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		DbEventModuleActivator.applicationContext = applicationContext;
 	}
 }

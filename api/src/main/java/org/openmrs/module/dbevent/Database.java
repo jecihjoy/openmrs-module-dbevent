@@ -3,8 +3,8 @@ package org.openmrs.module.dbevent;
 import lombok.Data;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -12,6 +12,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -21,7 +22,7 @@ import java.util.Properties;
 @Data
 public class Database implements Serializable {
 
-    private static final Logger log = LogManager.getLogger(Database.class);
+    private static final Log log = LogFactory.getLog(Database.class);
 
     private String username;
     private String password;
@@ -35,6 +36,7 @@ public class Database implements Serializable {
         this.username = properties.getProperty("connection.username");
         this.password = properties.getProperty("connection.password");
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Driver driver = DriverManager.getDriver(url);
             for (DriverPropertyInfo driverPropertyInfo : driver.getPropertyInfo(url, null)) {
                 switch (driverPropertyInfo.name.toLowerCase()) {
@@ -53,8 +55,11 @@ public class Database implements Serializable {
                 }
             }
         }
-        catch (Exception e) {
-            throw new IllegalArgumentException("Invalid connection.url: " + url);
+        catch (SQLException e) {
+            throw new IllegalArgumentException("Invalid connection.url XX : " + e);
+        }
+        catch (ClassNotFoundException e) {
+            throw new RuntimeException("class not found:  "+e);
         }
     }
 

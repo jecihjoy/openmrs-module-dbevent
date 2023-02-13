@@ -22,7 +22,7 @@
 	</scm>
 
 	<properties>
-		<openmrsVersion>2.5.7</openmrsVersion>
+		<openmrsVersion>2.3.3</openmrsVersion>
 		<debeziumVersion>1.8.0.Final</debeziumVersion>
 		<lombokVersion>1.18.24</lombokVersion>
 		<rocksdbVersion>7.6.0</rocksdbVersion>
@@ -58,6 +58,25 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.openmrs.api</groupId>
 			<artifactId>openmrs-api</artifactId>
@@ -133,6 +152,11 @@
 			<groupId>io.debezium</groupId>
 			<artifactId>debezium-connector-mysql</artifactId>
 			<version>${debeziumVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.32</version>
 		</dependency>
 
 		<!-- Lombok -->

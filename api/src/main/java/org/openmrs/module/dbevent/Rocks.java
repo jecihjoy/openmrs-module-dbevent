@@ -2,8 +2,8 @@
 package org.openmrs.module.dbevent;
 
 import org.apache.commons.lang3.SerializationUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.rocksdb.Options;
 import org.rocksdb.RocksDB;
 
@@ -16,7 +16,7 @@ import java.nio.file.Files;
  */
 public class Rocks {
 
-    private static final Logger log = LogManager.getLogger(Rocks.class);
+    private static final Log log = LogFactory.getLog(Rocks.class);
 
     private final RocksDB db;
 

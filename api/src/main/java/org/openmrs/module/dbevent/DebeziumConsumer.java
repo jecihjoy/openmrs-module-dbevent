@@ -1,9 +1,9 @@
 package org.openmrs.module.dbevent;
 
 import io.debezium.engine.ChangeEvent;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.kafka.connect.source.SourceRecord;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -15,7 +15,7 @@ import java.util.function.Consumer;
  */
 public class DebeziumConsumer implements Consumer<ChangeEvent<SourceRecord, SourceRecord>> {
 
-    private static final Logger log = LogManager.getLogger(DebeziumConsumer.class);
+    private static final Log log = LogFactory.getLog(DebeziumConsumer.class);
 
     private final DbEventSourceConfig eventSourceConfig;
     private final EventConsumer eventConsumer;
